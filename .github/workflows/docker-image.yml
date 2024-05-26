@@ -31,8 +31,7 @@ jobs:
     needs: test
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     - name: Generate Image Tag
       id: vars
       run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
