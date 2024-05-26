@@ -1,9 +1,10 @@
-FROM golang:1.20-alpine
+FROM golang:alpine3.20
 
 # Set maintainer label: maintainer=[YOUR-EMAIL]
 
 
 # Set working directory: `/src`
+
 
 WORKDIR /src
 
