@@ -18,7 +18,7 @@ jobs:
       run: docker build . --file Dockerfile --tag seidlfs/my-hello:latest
 
     - name: Login to DockerHub
-      run: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
+      run: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 
     - name: Push Image
       run: 
