@@ -38,19 +38,12 @@ jobs:
     - name: Build the Docker image
       env:
         GIT_SHA: ${{ steps.vars.outputs.sha_short }}'
-      run: |
-        docker build . --file Dockerfile --tag seidlfs/my-hello:latest
-        docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
-    - name: Login to DockerHub
-      env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
+        docker build . --file Dockerfile --tag seidlfs/my-hello:latest
+        docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
         echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
-    - name: Publish Image
-      env:
-        GIT_SHA: ${{ steps.vars.outputs.sha_short }}'
-      run:
         docker image push seidlfs/my-hello:$GIT_SHA
         docker image push seidlfs/my-hello:latest
   trivyScan:
