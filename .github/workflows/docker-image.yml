@@ -51,9 +51,6 @@ jobs:
       runs-on: ubuntu-20.04
       needs: publish
       steps:
-        - name: Create Vars
-          run: |
-            GIT_SHA="$(git rev-parse --short HEAD)"
         - name: Run Trivy vulnerability scanner
           uses: aquasecurity/trivy-action@0.20.0
           with:
