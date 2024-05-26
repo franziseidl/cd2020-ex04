@@ -41,7 +41,25 @@ jobs:
         docker build . --file Dockerfile --tag seidlfs/my-hello:latest
         docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
         echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
-        docker image push seidlfs/my-hello:$GIT_SHA
+        docker image push seidlfs/my-hello:github.sha
         docker image push seidlfs/my-hello:latest
+  trivyScan:
+      name: Scan for Vulnerabilities
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Build an image from Dockerfile
+          run: |
+            docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+        - name: Run Trivy vulnerability scanner
+          uses: aquasecurity/trivy-action@0.20.0
+          with:
+            image-ref: 'seidlfs/my-hello:${{ github.sha }}'
+            format: 'table'
+            exit-code: '1'
+            ignore-unfixed: true
+            vuln-type: 'os,library'
+            severity: 'CRITICAL,HIGH'
         
         
