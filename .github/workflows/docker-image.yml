@@ -15,4 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag seidlfs/my-hello:latest
+
+    - name: Login to DockerHub
+      run: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
+
+    - name: Push Image
+      run: 
+        GIT_SHA=$(git rev-parse --short HEAD)"
+        docker tag seidlfs/my-hello:lastest seidlfs/my-hello:$GIT_SHA
+        docker push seidlfs/my-hello:$GIT_SHA
+        
