@@ -45,7 +45,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: "Build and Publish Docker Image"
-    needs: test
+    needs: trivyScan
 
     steps:
     - uses: actions/checkout@v4
