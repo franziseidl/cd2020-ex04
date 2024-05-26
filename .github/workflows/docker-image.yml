@@ -14,7 +14,7 @@ jobs:
     - name: Build the Docker image
 
       run: |
-        GIT_SHA=$(git rev-parse --short HEAD)"
+        GIT_SHA="$(git rev-parse --short HEAD)"
         docker build . --file Dockerfile --tag seidlfs/my-hello:latest
         docker tag seidlfs/my-hello:lastest seidlfs/my-hello:$GIT_SHA
 
