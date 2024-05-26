@@ -37,10 +37,10 @@ jobs:
       run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
     - name: Build the Docker image
       env:
-        GIT_SHA: ${{ steps.vars.outputs.sha_short }}'
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
+        GIT_SHA="$(git rev-parse --short HEAD)"
         docker build . --file Dockerfile --tag seidlfs/my-hello:latest
         docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
         echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
@@ -51,11 +51,9 @@ jobs:
       runs-on: ubuntu-20.04
       needs: publish
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-        - name: Build an image from Dockerfile
+        - name: Create Vars
           run: |
-            docker build -t docker.io/my-organization/my-app:${{ steps.vars.outputs.sha_short }} .
+            GIT_SHA="$(git rev-parse --short HEAD)"
         - name: Run Trivy vulnerability scanner
           uses: aquasecurity/trivy-action@0.20.0
           with:
