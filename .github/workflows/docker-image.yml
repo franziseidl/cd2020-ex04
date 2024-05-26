@@ -27,5 +27,5 @@ jobs:
 
     - name: Push Image
       run: |
-        docker push seidlfs/my-hello:$GIT_SHA
+        docker image push seidlfs/my-hello:$GIT_SHA
         
