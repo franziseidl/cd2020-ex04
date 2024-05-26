@@ -42,5 +42,6 @@ jobs:
         docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
         echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
         docker image push seidlfs/my-hello:$GIT_SHA
+        docker image push seidlfs/my-hello:latest
         
         
