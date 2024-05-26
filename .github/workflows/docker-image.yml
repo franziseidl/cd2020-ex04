@@ -36,12 +36,12 @@ jobs:
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        GIT_SHA: ${{ github.sha }}'
       run: |
-        GIT_SHA="$(git rev-parse --short HEAD)"
         docker build . --file Dockerfile --tag seidlfs/my-hello:latest
         docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
         echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
-        docker image push seidlfs/my-hello:github.sha
+        docker image push seidlfs/my-hello:$GIT_SHA
         docker image push seidlfs/my-hello:latest
   trivyScan:
       name: Scan for Vulnerabilities
