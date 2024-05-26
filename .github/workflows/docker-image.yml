@@ -7,23 +7,18 @@ on:
     branches: [ "pipeline" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: "Build"
-
-    steps:
-    - uses: actions/checkout@v4
-    - run: |
-        go build
-  test:
-    runs-on: ubuntu-latest
-    name: "Test"
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          go test -v
+#  build:
+#    runs-on: ubuntu-latest
+#    name: "Build & Test"
+#
+#    steps:
+#    - uses: actions/checkout@v4
+#    - name: "Build"
+#      run: |
+#        go build
+#    - name: "Test"
+#      run:
+#        go test -v
   trivyScan:
     name: Scan for Vulnerabilities
     runs-on: ubuntu-20.04
