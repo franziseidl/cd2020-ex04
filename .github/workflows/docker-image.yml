@@ -46,6 +46,7 @@ jobs:
   trivyScan:
       name: Scan for Vulnerabilities
       runs-on: ubuntu-20.04
+      needs: publish
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
