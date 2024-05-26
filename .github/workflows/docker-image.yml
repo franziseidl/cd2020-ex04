@@ -7,25 +7,21 @@ on:
     branches: [ "pipeline" ]
 
 jobs:
-  build:
+  buildImage:
     runs-on: ubuntu-latest
+    name: "Build and Publish Docker Image"
+
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       run: |
         GIT_SHA="$(git rev-parse --short HEAD)"
         docker build . --file Dockerfile --tag seidlfs/my-hello:latest
         docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
-
-    - name: Login to DockerHub
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run:
-          echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
-
-    - name: Push Image
-      run: |
+        echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
         docker image push seidlfs/my-hello:$GIT_SHA
+        
         
