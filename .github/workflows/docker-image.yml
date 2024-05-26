@@ -16,7 +16,7 @@ jobs:
       run: |
         GIT_SHA="$(git rev-parse --short HEAD)"
         docker build . --file Dockerfile --tag seidlfs/my-hello:latest
-        docker tag seidlfs/my-hello:lastest seidlfs/my-hello:$GIT_SHA
+        docker tag seidlfs/my-hello:latest seidlfs/my-hello:$GIT_SHA
 
     - name: Login to DockerHub
       env:
